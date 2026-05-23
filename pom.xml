@@ -1,0 +1,129 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.tutorial</groupId>
+    <artifactId>blackjack21</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Blackjack 21 - Siete y Media</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>17</maven.compiler.release>
+        <javafx.version>21</javafx.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+            <classifier>${javafx.platform}</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.45.3.0</version>
+        </dependency>
+
+        <!-- Tests unitarios (JUnit 5 + Mockito para simular JavaFX) -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.11.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>windows</id>
+            <activation>
+                <os><family>windows</family></os>
+            </activation>
+            <properties><javafx.platform>win</javafx.platform></properties>
+        </profile>
+        <profile>
+            <id>linux</id>
+            <activation>
+                <os><family>unix</family></os>
+            </activation>
+            <properties><javafx.platform>linux</javafx.platform></properties>
+        </profile>
+        <profile>
+            <id>mac</id>
+            <activation>
+                <os><family>mac</family></os>
+            </activation>
+            <properties><javafx.platform>mac</javafx.platform></properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <release>17</release>
+                </configuration>
+            </plugin>
+
+            <!-- Copia todas las dependencias (incluyendo JavaFX nativos) a target/lib/ -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-libs</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Ejecuta la app via 'mvn package exec:exec@run' sin javafx-maven-plugin.
+                 Requiere primero copiar las libs con 'mvn package' o 'mvn dependency:copy-dependencies'. -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>run</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>java</executable>
+                            <arguments>
+                                <argument>--module-path=${project.build.directory}/lib</argument>
+                                <argument>--add-modules=javafx.controls</argument>
+                                <argument>-cp</argument>
+                                <argument>${project.build.directory}/classes${path.separator}${project.build.directory}/lib/*</argument>
+                                <argument>Juego21App</argument>
+                            </arguments>
+                            <workingDirectory>${project.basedir}</workingDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
