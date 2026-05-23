@@ -3,7 +3,7 @@
 Juego de Blackjack (Siete y Media) desarrollado en **JavaFX 21** con arquitectura **MVC + DAO** y persistencia en **SQLite**.
 
 <p align="center">
-  <img src="screenshot.png" alt="Blackjack 21" width="600">
+  <img src="src/main/resources/logo/logo.png" alt="Blackjack 21" width="600">
 </p>
 
 ## Requisitos
