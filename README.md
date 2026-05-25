@@ -17,9 +17,12 @@ Juego de Blackjack desarrollado en **JavaFX 21** con arquitectura **MVC + DAO** 
 ```bash
 # Con Maven (descarga JavaFX automaticamente)
 mvn clean package
-mvn exec:exec@run
+mvn javafx:run
 
-# O con el script de Windows (hace lo mismo)
+# O con scripts de Windows (sin restricciones de PowerShell)
+.\run.bat              # CMD - doble clic, funciona en cualquier equipo
+
+# Con PowerShell (si la politca de ejecucion lo permite)
 .\run.ps1
 ```
 
