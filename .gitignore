@@ -1,0 +1,20 @@
+# Dependencias de Maven (se descargan automaticamente)
+target/
+
+# Base de datos local generada por la app
+ranking.db
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+*.swp
+*.swo
+*~
+
+# SO
+.DS_Store
+Thumbs.db
