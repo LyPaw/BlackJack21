@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -156,6 +157,11 @@ public class Juego21App extends Application {
         ventanaPrincipal.setScene(escena);
         ventanaPrincipal.setFullScreen(true);
         ventanaPrincipal.show();
+        try {
+            ventanaPrincipal.getIcons().add(new Image(getClass().getResourceAsStream("/logo/logo.png")));
+        } catch (Exception e) {
+            System.out.println("No se pudo cargar el logo: " + e.getMessage());
+        }
     }
 
     /** Punto de entrada: delega en Application.launch() el ciclo de vida JavaFX. */
