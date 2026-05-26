@@ -1,5 +1,7 @@
 import controller.JuegoController;
+import controller.MusicManager;
 import database.ConexionDB;
+import javafx.scene.control.Slider;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,6 +28,7 @@ public class Juego21App extends Application {
     public void start(Stage ventanaPrincipal) {
         // Inicializa la base de datos (crea ranking.db y la tabla si no existen)
         ConexionDB.crearTabla();
+        MusicManager.iniciar();
 
         // ========== CREACION DE COMPONENTES DE INTERFAZ ==========
 
@@ -116,6 +119,15 @@ public class Juego21App extends Application {
         lblPuntos.setStyle("-fx-font-size: 14; -fx-font-weight: bold;");
         panelInformacion.getChildren().addAll(
                 lblMonedas, etiquetaMonedas, lblPuntos, etiquetaPuntuacion, etiquetaBanca);
+
+        Label lblVol = new Label("\uD83D\uDD0A");
+        lblVol.setStyle("-fx-font-size: 16;");
+        Slider sliderVol = new Slider(0, 1, 0.3);
+        sliderVol.setPrefWidth(100);
+        sliderVol.setShowTickLabels(false);
+        sliderVol.valueProperty().addListener((obs, old, val) ->
+                MusicManager.setVolumen(val.doubleValue()));
+        panelInformacion.getChildren().addAll(lblVol, sliderVol);
 
         HBox panelBotones = new HBox(10);
         panelBotones.setAlignment(Pos.CENTER);

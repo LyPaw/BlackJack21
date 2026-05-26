@@ -11,5 +11,5 @@ echo Compilacion exitosa.
 echo.
 echo === Iniciando Blackjack 21 ===
 echo.
-java --module-path "target\lib" --add-modules javafx.controls -cp "target\classes;target\lib\*" Juego21App
+java --module-path "target\lib" --add-modules javafx.controls,javafx.media -cp "target\classes;target\lib\*" Juego21App
 pause

@@ -28,6 +28,6 @@ Write-Host "=== Iniciando Blackjack 21 ===" -ForegroundColor Cyan
 Write-Host ""
 
 java --module-path "$TargetLib" `
-    --add-modules javafx.controls `
+    --add-modules javafx.controls,javafx.media `
     -cp "$TargetClasses;$TargetLib\*" `
     Juego21App
