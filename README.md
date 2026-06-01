@@ -22,7 +22,7 @@ mvn javafx:run
 # O con scripts de Windows (sin restricciones de PowerShell)
 .\run.bat              # CMD - doble clic, funciona en cualquier equipo
 
-# Con PowerShell (si la politca de ejecucion lo permite)
+# Con PowerShell (si la politica de ejecucion lo permite)
 .\run.ps1
 ```
 
@@ -31,9 +31,11 @@ mvn javafx:run
 ```
 src/
 ├── main/java/
-│   ├── Juego21App.java              # Punto de entrada (JavaFX Application)
+│   ├── com/blackjack/app/
+│   │   └── Juego21App.java          # Punto de entrada (JavaFX Application)
 │   ├── controller/
-│   │   └── JuegoController.java     # Logica del juego
+│   │   ├── JuegoController.java     # Logica del juego
+│   │   └── MusicManager.java        # Gestion de musica y efectos
 │   ├── model/
 │   │   ├── Carta.java               # Modelo de carta
 │   │   └── JugadorRanking.java      # Modelo de registro de ranking
@@ -42,11 +44,14 @@ src/
 │   ├── dao/
 │   │   ├── RankingDAO.java          # Interfaz DAO
 │   │   └── RankingDAOImpl.java      # Implementacion SQLite
-│   └── service/
-│       └── RankingService.java      # Capa de servicio
+│   ├── service/
+│   │   └── RankingService.java      # Capa de servicio
+│   └── view/
+│       └── RankingView.java         # UI de ranking y registro
 ├── main/resources/
 │   ├── image/                       # 52 cartas PNG (2C.png ... AS.png)
-│   └── sound/                       # barajar.wav
+│   ├── logo/                        # logo.png
+│   └── sound/                       # barajar.wav, musica_fondo.wav
 └── test/java/
     └── BackendTest.java             # 10 tests unitarios (JUnit 5)
 ```
@@ -54,7 +59,9 @@ src/
 ## Caracteristicas
 
 - Baraja completa de 52 cartas con valores de Blackjack
-- Animacion de sonido al barajar
+- As flexible (vale 11 o 1 segun convenga)
+- Musica de fondo y efecto de sonido al barajar
+- Control de volumen integrado
 - Puntuacion de la banca visible con cartas graficas
 - Ranking persistente en SQLite (TOP 5)
 - Dialogos superpuestos (no minimizan la pantalla completa)
