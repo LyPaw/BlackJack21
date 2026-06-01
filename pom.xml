@@ -110,7 +110,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>Juego21App</mainClass>
+                    <mainClass>com.blackjack.app.Juego21App</mainClass>
                 </configuration>
             </plugin>
             <!-- Ejecuta via 'mvn exec:exec@run' o run.ps1 -->
@@ -131,7 +131,7 @@
                                 <argument>--add-modules=javafx.controls,javafx.media</argument>
                                 <argument>-cp</argument>
                                 <argument>${project.build.directory}/classes${path.separator}${project.build.directory}/lib/*</argument>
-                                <argument>Juego21App</argument>
+                                <argument>com.blackjack.app.Juego21App</argument>
                             </arguments>
                             <workingDirectory>${project.basedir}</workingDirectory>
                         </configuration>

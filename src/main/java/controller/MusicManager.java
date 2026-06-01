@@ -15,9 +15,18 @@ public class MusicManager {
             mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
             mediaPlayer.setVolume(0.15);
             mediaPlayer.play();
-        } catch (Exception e) {
-            System.err.println("Error al iniciar musica: " + e.getMessage());
-        }
+        } catch (Exception e) { System.err.println("Error al iniciar musica: " + e.getMessage()); }
+    }
+
+    public static void reproducirSonidoBarajar() {
+        try {
+            java.net.URL url = MusicManager.class.getResource("/sound/barajar.wav");
+            if (url == null) return;
+            MediaPlayer sfx = new MediaPlayer(new Media(url.toString()));
+            sfx.setVolume(0.5);
+            sfx.play();
+            sfx.setOnEndOfMedia(sfx::dispose);
+        } catch (Exception e) { System.err.println("Error al reproducir sonido: " + e.getMessage()); }
     }
 
     public static void setVolumen(double porcentaje) {
@@ -26,10 +35,9 @@ public class MusicManager {
     }
 
     public static void detener() {
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.dispose();
-            mediaPlayer = null;
-        }
+        if (mediaPlayer == null) return;
+        mediaPlayer.stop();
+        mediaPlayer.dispose();
+        mediaPlayer = null;
     }
 }

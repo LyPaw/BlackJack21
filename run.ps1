@@ -30,4 +30,4 @@ Write-Host ""
 java --module-path "$TargetLib" `
     --add-modules javafx.controls,javafx.media `
     -cp "$TargetClasses;$TargetLib\*" `
-    Juego21App
+    com.blackjack.app.Juego21App

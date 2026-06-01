@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import java.sql.Connection;
+import java.sql.Statement;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -16,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class BackendTest {
+
+    private static final String TEST_DB = "test_ranking.db";
 
     // ========================
     // TESTS: model.Carta
@@ -75,14 +79,15 @@ class BackendTest {
 
     @BeforeAll
     static void setupBaseDeDatos() {
+        ConexionDB.setUrlBaseDatos("jdbc:sqlite:" + TEST_DB);
         ConexionDB.crearTabla();
         dao = new RankingDAOImpl();
     }
 
     @BeforeEach
     void limpiarRegistrosTestAntesDeCadaTest() {
-        try (var conn = ConexionDB.obtenerConexion();
-             var stmt = conn.createStatement()) {
+        try (Connection conn = ConexionDB.obtenerConexion();
+             Statement stmt = conn.createStatement()) {
             stmt.executeUpdate("DELETE FROM ranking WHERE nombre LIKE 'TEST_%'");
         } catch (Exception e) {
             System.err.println("Error limpiando registros test: " + e.getMessage());
@@ -91,12 +96,16 @@ class BackendTest {
 
     @AfterAll
     static void limpiarRegistrosTest() {
-        // Limpia los registros de prueba de la BD usando JDBC directo
-        try (var conn = database.ConexionDB.obtenerConexion();
-             var stmt = conn.createStatement()) {
+        try (Connection conn = ConexionDB.obtenerConexion();
+             Statement stmt = conn.createStatement()) {
             stmt.executeUpdate("DELETE FROM ranking WHERE nombre LIKE 'TEST_%'");
         } catch (Exception e) {
             System.err.println("Error limpiando registros test: " + e.getMessage());
+        }
+        try {
+            java.nio.file.Files.deleteIfExists(java.nio.file.Paths.get(TEST_DB));
+        } catch (Exception e) {
+            System.err.println("Error eliminando BD de test: " + e.getMessage());
         }
     }
 
