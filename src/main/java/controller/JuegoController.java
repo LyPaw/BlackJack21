@@ -103,15 +103,13 @@ public class JuegoController {
     }
 
     private void mostrarCartaEn(Carta carta, HBox contenedor) {
-        try {
-            java.net.URL url = getClass().getResource("/image/" + carta.getNombreArchivoImagen());
-            if (url != null) {
-                ImageView vista = new ImageView(new Image(url.toString()));
-                vista.setFitHeight(200);
-                vista.setPreserveRatio(true);
-                contenedor.getChildren().add(vista);
-            }
-        } catch (Exception ex) {
+        java.net.URL url = getClass().getResource("/image/" + carta.getNombreArchivoImagen());
+        if (url != null) {
+            ImageView vista = new ImageView(new Image(url.toString()));
+            vista.setFitHeight(200);
+            vista.setPreserveRatio(true);
+            contenedor.getChildren().add(vista);
+        } else {
             Label fallback = new Label(carta.getNombreArchivoImagen().replace(".png", ""));
             fallback.setStyle("-fx-font-size: 18; -fx-font-weight: bold; -fx-padding: 15; " +
                     "-fx-border-color: #333; -fx-border-radius: 5; -fx-background-color: white;");
